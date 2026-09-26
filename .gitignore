@@ -47,10 +47,11 @@ models/*.pkl
 *.pkl
 *.bin
 
-# Output & Submissions (Track final submission TSVs)
+# Output & Submissions (Track leaderboard matching_results.tsv; candidate_pairs.tsv exceeds GitHub 100MB limit)
 output/*.csv
+output/candidate_pairs.tsv
+output/parts/
 !output/matching_results.tsv
-!output/candidate_pairs.tsv
 
 # IDE / Editor configuration
 .idea/
