@@ -11,6 +11,7 @@ import re
 import unicodedata
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
+import wordninja
 
 
 @dataclass
@@ -21,10 +22,12 @@ class NormalizedName:
     norm_name: str = ""
     norm_name_no_legal: str = ""
     legal_type: Optional[str] = None
+    credential: Optional[str] = None
     tokens: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
+
 
 
 # Canonical legal forms mapping (lowercase pattern -> canonical legal form)
@@ -83,6 +86,92 @@ TRADE_SYMBOLS = {
 }
 
 
+# Top-level domain suffix pattern
+DOMAIN_SUFFIX_RE = re.compile(
+    r"(?:https?://)?(?:www\.)?([a-zA-Z0-9_\-\.]+)\.(?:com|org|net|in|co\.in|co|io|ai|biz|info|us)\b(?:/[^\s]*)?",
+    re.IGNORECASE,
+)
+
+# Professional credential suffixes
+CREDENTIAL_SUFFIXES = [
+    (r"\b(d\.?m\.?d\.?)\b", "DMD"),
+    (r"\b(m\.?d\.?)\b", "MD"),
+    (r"\b(d\.?o\.?)\b", "DO"),
+    (r"\b(d\.?d\.?s\.?)\b", "DDS"),
+    (r"\b(p\.?l\.?l\.?c\.?)\b", "PLLC"),
+    (r"\b(l\.?p\.?)\b", "LP"),
+    (r"\b(c\.?p\.?a\.?)\b", "CPA"),
+    (r"\b(esq\.?|esquire)\b", "ESQ"),
+    (r"\b(p\.?c\.?)\b", "PC"),
+    (r"\b(d\.?c\.?)\b", "DC"),
+    (r"\b(o\.?d\.?)\b", "OD"),
+    (r"\b(d\.?v\.?m\.?)\b", "DVM"),
+]
+
+# Common OCR typo homoglyph corrections
+OCR_HOMOGLYPHS = [
+    (re.compile(r"\bl([nstvd][a-z]{2,})\b", re.IGNORECASE), r"i\1"),
+    (re.compile(r"\blnc\b", re.IGNORECASE), "inc"),
+    (re.compile(r"\b1td\b", re.IGNORECASE), "ltd"),
+    (re.compile(r"\bc0\b", re.IGNORECASE), "co"),
+]
+
+
+def clean_domain_in_name(name: str) -> str:
+    """
+    Strip top-level domain suffixes (.com, .org, .in, .co, etc.) from business_name
+    when the name appears to be a bare URL/domain or pipe-separated URL, converting
+    it to space-separated English tokens (e.g. 'birchbridgetucson.com' -> 'birch bridge tucson').
+    """
+    if "|" in name:
+        parts = [p.strip() for p in name.split("|")]
+        non_domains = [p for p in parts if not DOMAIN_SUFFIX_RE.search(p)]
+        if non_domains:
+            name = " ".join(non_domains)
+
+    m = DOMAIN_SUFFIX_RE.search(name)
+    if m:
+        domain_body = m.group(1)
+        if domain_body.lower().startswith("www."):
+            domain_body = domain_body[4:]
+        subparts = re.split(r"[\.\-_]+", domain_body)
+        split_tokens = []
+        for p in subparts:
+            if p:
+                split_tokens.extend(wordninja.split(p))
+        split_str = " ".join(split_tokens)
+        name = DOMAIN_SUFFIX_RE.sub(split_str, name)
+
+    return name
+
+
+def extract_credentials(text: str) -> Tuple[str, Optional[str]]:
+    """
+    Strip professional credential suffixes (DMD, MD, DO, DDS, PLLC, LP, CPA, Esq)
+    into a separate field so they don't count as token mismatches.
+    """
+    found_cred: Optional[str] = None
+    cleaned = text
+    for pat, code in CREDENTIAL_SUFFIXES:
+        m = re.search(pat, cleaned, re.IGNORECASE)
+        if m:
+            if found_cred is None:
+                found_cred = code
+            cleaned = re.sub(pat, " ", cleaned, count=1, flags=re.IGNORECASE)
+
+    cleaned = re.sub(r"[\,\.\-\/\(\)]+", " ", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    return cleaned, found_cred
+
+
+def correct_ocr_homoglyphs(text: str) -> str:
+    """Lightweight fuzzy-token correction for common OCR typos and homoglyphs."""
+    res = text
+    for pat, repl in OCR_HOMOGLYPHS:
+        res = pat.sub(repl, res)
+    return res
+
+
 def clean_name_text(text: Optional[str]) -> str:
     """Normalize unicode, strip accents, outer noise symbols and collapse spaces."""
     if text is None:
@@ -138,6 +227,9 @@ def normalize_name(
     Normalize a business entity name:
     - Unicode decomposition and accent removal
     - Strip noisy bounding symbols (<<, >>, --, ##)
+    - Domain suffix stripping (.com, .org, .in, .co) and URL-to-token segmentation
+    - OCR-typo homoglyph correction (lnvestment -> investment, lndia -> india)
+    - Professional credential suffix extraction (DMD, MD, DO, DDS, PLLC, LP, CPA, Esq)
     - Expand trade abbreviations (& -> and, co -> company, mfg -> manufacturing)
     - Extract and canonicalize legal entity types (LLC, Inc, Pvt Ltd, SARL)
     - Handle displaced legal prefixes (e.g. LLC at start)
@@ -162,8 +254,18 @@ def normalize_name(
             norm_name="",
             norm_name_no_legal="",
             legal_type=None,
+            credential=None,
             tokens=[],
         )
+
+    # 1. Clean domain suffixes / bare URLs into space-separated tokens
+    cleaned = clean_domain_in_name(cleaned)
+
+    # 2. Correct OCR homoglyphs (e.g., lnvestment -> investment, lndia -> india)
+    cleaned = correct_ocr_homoglyphs(cleaned)
+
+    # 3. Extract and strip professional credential suffixes (DMD, MD, DO, DDS, PLLC, LP, CPA, Esq)
+    cleaned, credential = extract_credentials(cleaned)
 
     # Check for leading honorific / displaced legal prefixes (e.g., M/S, LLC, Pvt Ltd, SCI)
     displaced_legal = None
@@ -208,5 +310,6 @@ def normalize_name(
         norm_name=norm_name,
         norm_name_no_legal=norm_name_no_legal,
         legal_type=legal_type,
+        credential=credential,
         tokens=tokens,
     )

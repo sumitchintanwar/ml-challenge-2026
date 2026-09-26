@@ -1,0 +1,402 @@
+[
+  {
+    "threshold": 0.5,
+    "macro_f05": 0.7198380417774499,
+    "macro_precision": 0.7241803130018267,
+    "macro_recall": 0.8266620312824933,
+    "singleton_acc": 0.2554347826086957,
+    "matched_f05": 0.7469737037930265
+  },
+  {
+    "threshold": 0.51,
+    "macro_f05": 0.7221922454454957,
+    "macro_precision": 0.7273499156763799,
+    "macro_recall": 0.8256125215696174,
+    "singleton_acc": 0.26268115942028986,
+    "matched_f05": 0.7490420516787881
+  },
+  {
+    "threshold": 0.52,
+    "macro_f05": 0.7243238370826605,
+    "macro_precision": 0.7301821695944777,
+    "macro_recall": 0.8247687070294332,
+    "singleton_acc": 0.26992753623188404,
+    "matched_f05": 0.7508747800348813
+  },
+  {
+    "threshold": 0.53,
+    "macro_f05": 0.726249349607196,
+    "macro_precision": 0.7328405702675482,
+    "macro_recall": 0.8238240887580821,
+    "singleton_acc": 0.27355072463768115,
+    "matched_f05": 0.7527010952389492
+  },
+  {
+    "threshold": 0.54,
+    "macro_f05": 0.7288608983165199,
+    "macro_precision": 0.7361003731598144,
+    "macro_recall": 0.8230598456671063,
+    "singleton_acc": 0.286231884057971,
+    "matched_f05": 0.7547242640274038
+  },
+  {
+    "threshold": 0.55,
+    "macro_f05": 0.7310840514710422,
+    "macro_precision": 0.7389171844224702,
+    "macro_recall": 0.8222992934214057,
+    "singleton_acc": 0.2916666666666667,
+    "matched_f05": 0.7567597576647561
+  },
+  {
+    "threshold": 0.56,
+    "macro_f05": 0.7334381097377449,
+    "macro_precision": 0.741938070926705,
+    "macro_recall": 0.8212143039700797,
+    "singleton_acc": 0.30434782608695654,
+    "matched_f05": 0.7585103905226751
+  },
+  {
+    "threshold": 0.57,
+    "macro_f05": 0.7351710471122688,
+    "macro_precision": 0.7445430981904483,
+    "macro_recall": 0.819616525144578,
+    "singleton_acc": 0.3079710144927536,
+    "matched_f05": 0.7601328781703796
+  },
+  {
+    "threshold": 0.58,
+    "macro_f05": 0.7370147755596042,
+    "macro_precision": 0.7471287910476682,
+    "macro_recall": 0.8182053125947516,
+    "singleton_acc": 0.3170289855072464,
+    "matched_f05": 0.7615550694210312
+  },
+  {
+    "threshold": 0.59,
+    "macro_f05": 0.739210320101909,
+    "macro_precision": 0.7500973382631401,
+    "macro_recall": 0.8172830775141007,
+    "singleton_acc": 0.322463768115942,
+    "matched_f05": 0.7635613412404983
+  },
+  {
+    "threshold": 0.6,
+    "macro_f05": 0.7411656708645834,
+    "macro_precision": 0.7528064361792588,
+    "macro_recall": 0.8160224752633993,
+    "singleton_acc": 0.32608695652173914,
+    "matched_f05": 0.7654192381681985
+  },
+  {
+    "threshold": 0.61,
+    "macro_f05": 0.7435327547109938,
+    "macro_precision": 0.7558405009387607,
+    "macro_recall": 0.8149071256331982,
+    "singleton_acc": 0.33695652173913043,
+    "matched_f05": 0.767289511416876
+  },
+  {
+    "threshold": 0.62,
+    "macro_f05": 0.7460196159415668,
+    "macro_precision": 0.7590302823988693,
+    "macro_recall": 0.8139348855520472,
+    "singleton_acc": 0.34782608695652173,
+    "matched_f05": 0.7692865607917567
+  },
+  {
+    "threshold": 0.63,
+    "macro_f05": 0.748046262582116,
+    "macro_precision": 0.7618931813538774,
+    "macro_recall": 0.8125193471728125,
+    "singleton_acc": 0.3532608695652174,
+    "matched_f05": 0.7711140657942817
+  },
+  {
+    "threshold": 0.64,
+    "macro_f05": 0.750400612104376,
+    "macro_precision": 0.7650188654951631,
+    "macro_recall": 0.8110657494320861,
+    "singleton_acc": 0.3713768115942029,
+    "matched_f05": 0.7725474457956658
+  },
+  {
+    "threshold": 0.65,
+    "macro_f05": 0.7526496864595381,
+    "macro_precision": 0.7683623500267664,
+    "macro_recall": 0.8096201286795346,
+    "singleton_acc": 0.375,
+    "matched_f05": 0.774716228951934
+  },
+  {
+    "threshold": 0.66,
+    "macro_f05": 0.7554104391163131,
+    "macro_precision": 0.7720854099229437,
+    "macro_recall": 0.8083533353335334,
+    "singleton_acc": 0.38768115942028986,
+    "matched_f05": 0.7768973198606981
+  },
+  {
+    "threshold": 0.67,
+    "macro_f05": 0.7575065314852515,
+    "macro_precision": 0.7752286210694552,
+    "macro_recall": 0.8065494644702565,
+    "singleton_acc": 0.39311594202898553,
+    "matched_f05": 0.7787983283921911
+  },
+  {
+    "threshold": 0.68,
+    "macro_f05": 0.7600016402291886,
+    "macro_precision": 0.778766522312127,
+    "macro_recall": 0.8048968785767465,
+    "singleton_acc": 0.4057971014492754,
+    "matched_f05": 0.7806982534827624
+  },
+  {
+    "threshold": 0.69,
+    "macro_f05": 0.762177092241516,
+    "macro_precision": 0.7821128381846953,
+    "macro_recall": 0.8030283583913947,
+    "singleton_acc": 0.41304347826086957,
+    "matched_f05": 0.7825774050304771
+  },
+  {
+    "threshold": 0.7,
+    "macro_f05": 0.7644297594029378,
+    "macro_precision": 0.7855035127499874,
+    "macro_recall": 0.8011534883647096,
+    "singleton_acc": 0.41847826086956524,
+    "matched_f05": 0.7846441372149863
+  },
+  {
+    "threshold": 0.71,
+    "macro_f05": 0.7666018435167636,
+    "macro_precision": 0.788816722858877,
+    "macro_recall": 0.7992278196073574,
+    "singleton_acc": 0.4221014492753623,
+    "matched_f05": 0.7867314314940319
+  },
+  {
+    "threshold": 0.72,
+    "macro_f05": 0.7689614185115967,
+    "macro_precision": 0.7924867128737515,
+    "macro_recall": 0.7972332153850306,
+    "singleton_acc": 0.427536231884058,
+    "matched_f05": 0.7889113182700809
+  },
+  {
+    "threshold": 0.73,
+    "macro_f05": 0.7710104596970525,
+    "macro_precision": 0.7957867651011966,
+    "macro_recall": 0.7949686238465117,
+    "singleton_acc": 0.4311594202898551,
+    "matched_f05": 0.7908683800688925
+  },
+  {
+    "threshold": 0.74,
+    "macro_f05": 0.7728301569764661,
+    "macro_precision": 0.7991778520731417,
+    "macro_recall": 0.7920111455590004,
+    "singleton_acc": 0.4384057971014493,
+    "matched_f05": 0.792370989690662
+  },
+  {
+    "threshold": 0.75,
+    "macro_f05": 0.7752394725225369,
+    "macro_precision": 0.8029376572355871,
+    "macro_recall": 0.7892457499718225,
+    "singleton_acc": 0.45108695652173914,
+    "matched_f05": 0.7941801085797446
+  },
+  {
+    "threshold": 0.76,
+    "macro_f05": 0.7782856214035732,
+    "macro_precision": 0.8074111348863824,
+    "macro_recall": 0.787004176608137,
+    "singleton_acc": 0.4673913043478261,
+    "matched_f05": 0.7964515643499872
+  },
+  {
+    "threshold": 0.77,
+    "macro_f05": 0.7805793111750366,
+    "macro_precision": 0.8112755353679446,
+    "macro_recall": 0.7839241463828922,
+    "singleton_acc": 0.4891304347826087,
+    "matched_f05": 0.7976090327552866
+  },
+  {
+    "threshold": 0.78,
+    "macro_f05": 0.7825391535289826,
+    "macro_precision": 0.8147611797476784,
+    "macro_recall": 0.7810034178020977,
+    "singleton_acc": 0.49818840579710144,
+    "matched_f05": 0.799154122593024
+  },
+  {
+    "threshold": 0.79,
+    "macro_f05": 0.7843105061869183,
+    "macro_precision": 0.8179890422164648,
+    "macro_recall": 0.7781680152142199,
+    "singleton_acc": 0.5018115942028986,
+    "matched_f05": 0.8008172701770929
+  },
+  {
+    "threshold": 0.8,
+    "macro_f05": 0.7865507703975998,
+    "macro_precision": 0.8220969716019221,
+    "macro_recall": 0.7742307960954825,
+    "singleton_acc": 0.5163043478260869,
+    "matched_f05": 0.802341606140108
+  },
+  {
+    "threshold": 0.81,
+    "macro_f05": 0.7887031194022387,
+    "macro_precision": 0.8260586628648433,
+    "macro_recall": 0.7702474215675537,
+    "singleton_acc": 0.5380434782608695,
+    "matched_f05": 0.8033494750611818
+  },
+  {
+    "threshold": 0.82,
+    "macro_f05": 0.7907490686103026,
+    "macro_precision": 0.8297264069841327,
+    "macro_recall": 0.7665903495111416,
+    "singleton_acc": 0.5507246376811594,
+    "matched_f05": 0.804773995663641
+  },
+  {
+    "threshold": 0.83,
+    "macro_f05": 0.7925888367656346,
+    "macro_precision": 0.83367529393632,
+    "macro_recall": 0.7626086418165626,
+    "singleton_acc": 0.5634057971014492,
+    "matched_f05": 0.8059802877971399
+  },
+  {
+    "threshold": 0.84,
+    "macro_f05": 0.7950894709100257,
+    "macro_precision": 0.8383254018042499,
+    "macro_recall": 0.7580835861363914,
+    "singleton_acc": 0.5833333333333334,
+    "matched_f05": 0.8074626463035194
+  },
+  {
+    "threshold": 0.85,
+    "macro_f05": 0.7967039544808469,
+    "macro_precision": 0.8424245418769869,
+    "macro_recall": 0.7520611981833104,
+    "singleton_acc": 0.605072463768116,
+    "matched_f05": 0.8079012216422131
+  },
+  {
+    "threshold": 0.86,
+    "macro_f05": 0.7968243276123438,
+    "macro_precision": 0.8448075182698643,
+    "macro_recall": 0.745571144416029,
+    "singleton_acc": 0.6177536231884058,
+    "matched_f05": 0.8072876523548032
+  },
+  {
+    "threshold": 0.87,
+    "macro_f05": 0.7987273275705802,
+    "macro_precision": 0.8494073613710578,
+    "macro_recall": 0.7398300147475065,
+    "singleton_acc": 0.644927536231884,
+    "matched_f05": 0.8077140413229842
+  },
+  {
+    "threshold": 0.88,
+    "macro_f05": 0.7997501586986423,
+    "macro_precision": 0.8532120275519616,
+    "macro_recall": 0.7328905112733495,
+    "singleton_acc": 0.6721014492753623,
+    "matched_f05": 0.8072088320977796
+  },
+  {
+    "threshold": 0.89,
+    "macro_f05": 0.8000847771077314,
+    "macro_precision": 0.8583029731544585,
+    "macro_recall": 0.7214053548211964,
+    "singleton_acc": 0.6992753623188406,
+    "matched_f05": 0.8059751970255326
+  },
+  {
+    "threshold": 0.9,
+    "macro_f05": 0.8017136034628006,
+    "macro_precision": 0.8669629661378836,
+    "macro_recall": 0.7045242222634961,
+    "singleton_acc": 0.7445652173913043,
+    "matched_f05": 0.8050528549830152
+  },
+  {
+    "threshold": 0.91,
+    "macro_f05": 0.8010041169760174,
+    "macro_precision": 0.8700577200577201,
+    "macro_recall": 0.6941585031519024,
+    "singleton_acc": 0.7807971014492754,
+    "matched_f05": 0.8021848381119083
+  },
+  {
+    "threshold": 0.92,
+    "macro_f05": 0.7991744611271014,
+    "macro_precision": 0.8729604309637311,
+    "macro_recall": 0.6816397909632232,
+    "singleton_acc": 0.8115942028985508,
+    "matched_f05": 0.7984487601153687
+  },
+  {
+    "threshold": 0.93,
+    "macro_f05": 0.7948076491163922,
+    "macro_precision": 0.873533504144065,
+    "macro_recall": 0.6671642164216421,
+    "singleton_acc": 0.8333333333333334,
+    "matched_f05": 0.7925565453069552
+  },
+  {
+    "threshold": 0.94,
+    "macro_f05": 0.788420377378309,
+    "macro_precision": 0.8731783495809898,
+    "macro_recall": 0.649342989854541,
+    "singleton_acc": 0.8641304347826086,
+    "matched_f05": 0.78399654423687
+  },
+  {
+    "threshold": 0.95,
+    "macro_f05": 0.7803838540152218,
+    "macro_precision": 0.8723031430127139,
+    "macro_recall": 0.6286506825285703,
+    "singleton_acc": 0.8931159420289855,
+    "matched_f05": 0.7737967774212134
+  },
+  {
+    "threshold": 0.96,
+    "macro_f05": 0.7663791858568881,
+    "macro_precision": 0.8663344509054081,
+    "macro_recall": 0.6029416830571946,
+    "singleton_acc": 0.9094202898550725,
+    "matched_f05": 0.7580211156327961
+  },
+  {
+    "threshold": 0.97,
+    "macro_f05": 0.7464202712130088,
+    "macro_precision": 0.8565825233316982,
+    "macro_recall": 0.5693907882851778,
+    "singleton_acc": 0.9420289855072463,
+    "matched_f05": 0.7349906099141396
+  },
+  {
+    "threshold": 0.98,
+    "macro_f05": 0.7133328128276795,
+    "macro_precision": 0.8364875773291615,
+    "macro_recall": 0.5212482756212129,
+    "singleton_acc": 0.9655797101449275,
+    "matched_f05": 0.6985937118094598
+  },
+  {
+    "threshold": 0.99,
+    "macro_f05": 0.63932900038381,
+    "macro_precision": 0.7794229422942294,
+    "macro_recall": 0.4358305274971942,
+    "singleton_acc": 0.9873188405797102,
+    "matched_f05": 0.6189955197245388
+  }
+]

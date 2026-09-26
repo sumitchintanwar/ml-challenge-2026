@@ -34,14 +34,14 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.features import FeatureExtractor, FEATURE_COLUMNS
+from src.features import FeatureExtractor, FEATURE_COLUMNS, compute_street_unit_pair_metrics
 
 
 # Global variables for shared COW memory across forked processes
 _BLOCKER = None
 _MODEL = None
 _EXTRACTOR = None
-_THRESHOLD = 0.90
+_THRESHOLD = 0.879
 _S1_DF = None
 _CORPUS_NAMES = None
 _CORPUS_ADDRS = None
@@ -82,7 +82,7 @@ def _worker_process_shard(args: Tuple[int, int, int, str]) -> Dict[str, Any]:
                 # Pre-extract S1 fields
                 s1_ids = sub_s1["entity_id"].values
                 s1_names = sub_s1["norm_name"].fillna("").values
-                s1_addrs = sub_s1["norm_address"].fillna("").values
+                s1_addrs = sub_s1["business_address"].fillna("").values
                 s1_countries = sub_s1["country"].fillna("").values
 
                 # Collect candidate pairs for the entire micro-batch
@@ -94,12 +94,13 @@ def _worker_process_shard(args: Tuple[int, int, int, str]) -> Dict[str, Any]:
                 b_s1_countries = []
                 b_cand_countries = []
 
+                query_out: Dict[str, Tuple[str, str]] = {}
+
                 for q_idx, q_id in enumerate(s1_ids):
                     cand_ids = cands_by_q.get(q_id, [])
 
                     if not cand_ids:
-                        f_match.write(f"{q_id}\t\n")
-                        f_cand.write(f"{q_id}\t\n")
+                        query_out[q_id] = ("", "")
                         total_singletons += 1
                         continue
 
@@ -150,7 +151,10 @@ def _worker_process_shard(args: Tuple[int, int, int, str]) -> Dict[str, Any]:
                     tfidf_sim = np.asarray(v_s1.multiply(v_cands).sum(axis=1), dtype=np.float32).ravel()
                     np.clip(tfidf_sim, 0.0, 1.0, out=tfidf_sim)
 
-                    # Assemble 14 features
+                    # Street number & unit number features
+                    street_unit_feats = compute_street_unit_pair_metrics(b_s1_addrs, b_cand_addrs)
+
+                    # Assemble 17 features
                     X_batch = np.column_stack([
                         name_lev,
                         name_jw,
@@ -166,6 +170,9 @@ def _worker_process_shard(args: Tuple[int, int, int, str]) -> Dict[str, Any]:
                         addr_len_diff,
                         name_exact,
                         addr_exact,
+                        street_unit_feats["exact_street_number_match"],
+                        street_unit_feats["street_number_numeric_distance"],
+                        street_unit_feats["unit_number_match"],
                     ])
 
                     # 3. Model Scoring
@@ -179,13 +186,17 @@ def _worker_process_shard(args: Tuple[int, int, int, str]) -> Dict[str, Any]:
                         if matched_indices:
                             matched_indices.sort(key=lambda idx: q_probs[idx], reverse=True)
                             matched_cands = list(dict.fromkeys(cand_ids[idx] for idx in matched_indices))
-                            f_match.write(f"{q_id}\t{','.join(matched_cands)}\n")
+                            query_out[q_id] = (",".join(matched_cands), ",".join(dict.fromkeys(cand_ids)))
                             total_matches_found += 1
                         else:
-                            f_match.write(f"{q_id}\t\n")
+                            query_out[q_id] = ("", ",".join(dict.fromkeys(cand_ids)))
                             total_singletons += 1
 
-                        f_cand.write(f"{q_id}\t{','.join(dict.fromkeys(cand_ids))}\n")
+                # Write all queries in strict input order
+                for q_id in s1_ids:
+                    m_str, c_str = query_out[q_id]
+                    f_match.write(f"{q_id}\t{m_str}\n")
+                    f_cand.write(f"{q_id}\t{c_str}\n")
 
                 done = b_end - start_idx
                 if done % 10000 == 0 or done == n_queries:
@@ -212,8 +223,8 @@ def _worker_process_shard(args: Tuple[int, int, int, str]) -> Dict[str, Any]:
 
 def main():
     parser = argparse.ArgumentParser(description="Full-scale test inference across all 1.73M entities.")
-    parser.add_argument("--workers", type=int, default=7, help="Number of parallel worker processes (default: 7)")
-    parser.add_argument("--threshold", type=float, default=0.90, help="Classification probability threshold (default: 0.90)")
+    parser.add_argument("--workers", type=int, default=8, help="Number of parallel worker processes (default: 8)")
+    parser.add_argument("--threshold", type=float, default=0.879, help="Classification probability threshold (default: 0.879)")
     parser.add_argument("--data-dir", type=str, default="data/processed", help="Directory with processed Parquet files")
     parser.add_argument("--model-path", type=str, default="models/lgbm_matcher.pkl", help="Path to trained model artifact")
     parser.add_argument("--blocker-cache", type=str, default="data/processed/blocker_test_index.pkl", help="Path to test blocker index")
@@ -257,14 +268,14 @@ def main():
     # 4. Load Corpus Lookups (Source 2 + Source 3)
     print(f"\n4. Loading test corpus metadata lookups (Source 2 + Source 3)...")
     t0 = time.time()
-    s2 = pd.read_parquet(f"{args.data_dir}/test_source2.parquet", columns=["entity_id", "norm_name", "norm_address", "country"])
-    s3 = pd.read_parquet(f"{args.data_dir}/test_source3.parquet", columns=["entity_id", "norm_name", "norm_address", "country"])
+    s2 = pd.read_parquet(f"{args.data_dir}/test_source2.parquet", columns=["entity_id", "norm_name", "business_address", "country"])
+    s3 = pd.read_parquet(f"{args.data_dir}/test_source3.parquet", columns=["entity_id", "norm_name", "business_address", "country"])
     corpus = pd.concat([s2, s3], ignore_index=True)
     del s2, s3
 
     print("   Building in-memory string lookup dictionaries...")
     corpus_names = dict(zip(corpus["entity_id"], corpus["norm_name"].fillna("")))
-    corpus_addrs = dict(zip(corpus["entity_id"], corpus["norm_address"].fillna("")))
+    corpus_addrs = dict(zip(corpus["entity_id"], corpus["business_address"].fillna("")))
     corpus_countries = dict(zip(corpus["entity_id"], corpus["country"].fillna("")))
     del corpus
     print(f"   Lookups built for {len(corpus_names):,} records in {time.time()-t0:.2f}s")
@@ -371,7 +382,7 @@ def main():
         f"python3 utils/validate_submission.py "
         f"--matching {matching_file} "
         f"--candidate {candidate_file} "
-        f"--test-dir dataset/test"
+        f"--test-dir data/raw"
     )
     print(f"Command: {cmd}")
     res = os.system(cmd)

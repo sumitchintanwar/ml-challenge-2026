@@ -673,3 +673,96 @@ def batch_normalize_addresses(
         normalize_address(addr, ctry)
         for addr, ctry in zip(addresses, countries)
     ]
+
+
+# ---------------------------------------------------------------------------
+# Street Number and Unit Number Extraction & Comparison
+# ---------------------------------------------------------------------------
+
+UNIT_EXTRACTION_RE = re.compile(
+    r"\b(?:unit|ste|suite|apt|apartment|flat|office|shop|room|fl|floor|fn|po\s*box)\b(?:\s*(?:no\.?|num\.?)?\s*[\#\:\-\.]?\s*|\s+)([A-Za-z0-9\-\/]+)",
+    re.IGNORECASE,
+)
+
+STREET_NUM_EXTRACTION_RE = re.compile(
+    r"(?:^|[\,\;\s]|\b)"
+    r"(?:(?:door|house|h|d|plot|khasra)\s*(?:no\.?|num\.?)?\s*[\#\:\-\.]?\s*|no\.?\s*[\#\:\-\.]?\s*|\#+|\b)"
+    r"(\d+)(?:[\-\/]\d+)?\b",
+    re.IGNORECASE,
+)
+
+
+def parse_street_and_unit_numbers(
+    address: Optional[str],
+) -> Tuple[Optional[str], Optional[int], Optional[str]]:
+    """
+    Parse out leading numeric street/house/plot number and any unit/suite/office
+    number from business_address for both US and Indian records.
+    Handles formats: '#1040', '##1047', 'No #5', 'H No 522', 'Office No 407', 'Plot 45', etc.
+
+    Returns:
+        Tuple of (raw_street_number, numeric_street_number, unit_number)
+    """
+    if not address:
+        return None, None, None
+
+    addr_str = str(address).strip()
+    if not addr_str or addr_str.lower() in ("nan", "none", "null", "<missing address>"):
+        return None, None, None
+
+    # 1. Extract Unit
+    unit_val = None
+    u_match = UNIT_EXTRACTION_RE.search(addr_str)
+    working_addr = addr_str
+    if u_match:
+        unit_val = u_match.group(1).upper()
+        # Remove unit match from working_addr to avoid mistaking it as street number
+        working_addr = addr_str[:u_match.start()] + " " + addr_str[u_match.end():]
+
+    # 2. Extract Street Number from working_addr
+    street_num_str = None
+    numeric_street_num = None
+    s_match = STREET_NUM_EXTRACTION_RE.search(working_addr)
+    if s_match:
+        street_num_str = s_match.group(1)
+        if street_num_str.isdigit():
+            numeric_street_num = int(street_num_str)
+
+    return street_num_str, numeric_street_num, unit_val
+
+
+def compare_street_and_unit_numbers(
+    addr1: Optional[str],
+    addr2: Optional[str],
+) -> Tuple[int, float, int]:
+    """
+    Compare street numbers and unit numbers between two addresses.
+
+    Returns:
+        Tuple of:
+          - exact_street_number_match: int (1 if both present and equal, else 0)
+          - street_number_numeric_distance: float (absolute numeric difference if both parseable as numbers, else -1.0)
+          - unit_number_match: int (1 if both present and equal, 0 if mismatch, -1 if neither has unit / not applicable)
+    """
+    s1_str, s1_num, u1 = parse_street_and_unit_numbers(addr1)
+    s2_str, s2_num, u2 = parse_street_and_unit_numbers(addr2)
+
+    # 1. exact_street_number_match
+    exact_street = 1 if (s1_str is not None and s2_str is not None and s1_str == s2_str) else 0
+
+    # 2. street_number_numeric_distance
+    if s1_num is not None and s2_num is not None:
+        street_dist = float(abs(s1_num - s2_num))
+    else:
+        street_dist = -1.0
+
+    # 3. unit_number_match
+    if u1 is not None and u2 is not None:
+        unit_match = 1 if u1 == u2 else 0
+    elif u1 is None and u2 is None:
+        unit_match = -1
+    else:
+        unit_match = 0
+
+    return exact_street, street_dist, unit_match
+

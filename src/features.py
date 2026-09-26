@@ -41,6 +41,11 @@ from rapidfuzz import fuzz
 from rapidfuzz.distance import JaroWinkler, Levenshtein
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+from src.address_normalization import (
+    compare_street_and_unit_numbers,
+    parse_street_and_unit_numbers,
+)
+
 
 # ---------------------------------------------------------------------------
 # Feature Column Names & Schema Definition
@@ -61,6 +66,9 @@ FEATURE_COLUMNS = [
     "feat_addr_len_diff_ratio",
     "feat_name_exact_match",
     "feat_addr_exact_match",
+    "exact_street_number_match",
+    "street_number_numeric_distance",
+    "unit_number_match",
 ]
 
 OUTPUT_SCHEMA_TRAIN = pa.schema([
@@ -80,6 +88,9 @@ OUTPUT_SCHEMA_TRAIN = pa.schema([
     ("feat_addr_len_diff_ratio", pa.float32()),
     ("feat_name_exact_match", pa.int8()),
     ("feat_addr_exact_match", pa.int8()),
+    ("exact_street_number_match", pa.int8()),
+    ("street_number_numeric_distance", pa.float32()),
+    ("unit_number_match", pa.float32()),
     ("label", pa.int8()),
 ])
 
@@ -100,6 +111,9 @@ OUTPUT_SCHEMA_TEST = pa.schema([
     ("feat_addr_len_diff_ratio", pa.float32()),
     ("feat_name_exact_match", pa.int8()),
     ("feat_addr_exact_match", pa.int8()),
+    ("exact_street_number_match", pa.int8()),
+    ("street_number_numeric_distance", pa.float32()),
+    ("unit_number_match", pa.float32()),
 ])
 
 
@@ -197,6 +211,64 @@ def compute_tfidf_cosine_similarity(
     return cos_sim
 
 
+def compute_street_unit_pair_metrics(
+    addr1_list: List[str],
+    addr2_list: List[str],
+) -> Dict[str, np.ndarray]:
+    """
+    Compute street number and unit number match features for paired addresses:
+      - exact_street_number_match: 1 if both parsed and match, 0 otherwise (pa.int8)
+      - street_number_numeric_distance: absolute difference if both are numbers, else -1.0 (pa.float32)
+      - unit_number_match: 1.0 if both match, 0.0 if mismatch, -1.0 if not applicable (neither has unit)
+    """
+    n = len(addr1_list)
+    exact_match = np.empty(n, dtype=np.int8)
+    num_dist = np.empty(n, dtype=np.float32)
+    unit_match = np.empty(n, dtype=np.float32)
+
+    cache: Dict[str, Tuple[Optional[str], Optional[int], Optional[str]]] = {}
+
+    for i in range(n):
+        a1 = addr1_list[i]
+        a2 = addr2_list[i]
+
+        p1 = cache.get(a1)
+        if p1 is None:
+            p1 = parse_street_and_unit_numbers(a1)
+            cache[a1] = p1
+
+        p2 = cache.get(a2)
+        if p2 is None:
+            p2 = parse_street_and_unit_numbers(a2)
+            cache[a2] = p2
+
+        s1_str, s1_num, u1 = p1
+        s2_str, s2_num, u2 = p2
+
+        # 1. exact_street_number_match
+        exact_match[i] = 1 if (s1_str is not None and s2_str is not None and s1_str == s2_str) else 0
+
+        # 2. street_number_numeric_distance
+        if s1_num is not None and s2_num is not None:
+            num_dist[i] = float(abs(s1_num - s2_num))
+        else:
+            num_dist[i] = -1.0
+
+        # 3. unit_number_match
+        if u1 is not None and u2 is not None:
+            unit_match[i] = 1.0 if u1 == u2 else 0.0
+        elif u1 is None and u2 is None:
+            unit_match[i] = -1.0  # Not applicable
+        else:
+            unit_match[i] = 0.0
+
+    return {
+        "exact_street_number_match": exact_match,
+        "street_number_numeric_distance": num_dist,
+        "unit_number_match": unit_match,
+    }
+
+
 # ---------------------------------------------------------------------------
 # Feature Extractor Class
 # ---------------------------------------------------------------------------
@@ -242,7 +314,7 @@ class FeatureExtractor:
         cand_countries: List[str],
     ) -> Dict[str, np.ndarray]:
         """
-        Extract the full 14-feature dictionary from aligned string lists.
+        Extract the full feature dictionary from aligned string lists.
         """
         if not self.is_fitted:
             raise RuntimeError("FeatureExtractor must be fitted with .fit() before extracting features.")
@@ -263,6 +335,9 @@ class FeatureExtractor:
         for i in range(n):
             country_match[i] = 1 if s1_countries[i] == cand_countries[i] else 0
 
+        # 5. Street number and unit number metrics
+        street_unit_feats = compute_street_unit_pair_metrics(s1_addrs, cand_addrs)
+
         # Combine all features
         features = {
             "feat_name_levenshtein": name_feats["feat_name_levenshtein"],
@@ -279,6 +354,9 @@ class FeatureExtractor:
             "feat_addr_len_diff_ratio": addr_feats["feat_addr_len_diff_ratio"],
             "feat_name_exact_match": name_feats["feat_name_exact_match"],
             "feat_addr_exact_match": addr_feats["feat_addr_exact_match"],
+            "exact_street_number_match": street_unit_feats["exact_street_number_match"],
+            "street_number_numeric_distance": street_unit_feats["street_number_numeric_distance"],
+            "unit_number_match": street_unit_feats["unit_number_match"],
         }
         return features
 

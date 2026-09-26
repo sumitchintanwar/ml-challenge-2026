@@ -22,6 +22,8 @@ import pandas as pd
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.neighbors import NearestNeighbors
+import unidecode
+
 
 
 # ---------------------------------------------------------------------------
@@ -187,17 +189,30 @@ def canonicalize_state(state: Optional[str], country: str = "US") -> str:
     return US_STATE_CODES.get(st, st)
 
 
-def extract_token_blocking_keys(name: Optional[str], min_len: int = 2) -> List[str]:
-    """Generate exact and fuzzy token-overlap blocking keys with domain stripping."""
-    if not name:
-        return []
-    raw_str = str(name).lower()
+COMMON_HONORIFIC_PREFIXES = re.compile(
+    r"^(?:m\s*/\s*s\.?|shri|shree|sri|smt|dr\.?|mr\.?|ms\.?|private|pvt\.?|limited|ltd\.?|the)\b[\s\.\-\/\:]*",
+    re.IGNORECASE,
+)
+
+
+def strip_honorific_prefixes(text: str) -> str:
+    """Recursively strip leading honorific and legal prefix tokens."""
+    s = text.strip()
+    while True:
+        sub = COMMON_HONORIFIC_PREFIXES.sub("", s).strip()
+        if sub == s or not sub:
+            break
+        s = sub
+    return s
+
+
+def _generate_token_keys_for_string(text: str, prefix_tag: str = "", min_len: int = 2) -> List[str]:
+    raw_str = text.lower()
     de_domain = DOMAIN_REGEX.sub(" ", raw_str)
     raw_words = [w for w in PUNCT_SPLIT.split(de_domain) if len(w) >= min_len]
     if not raw_words:
         return []
 
-    # Filter stop words for more discriminative sorted token keys
     content_words = [w for w in raw_words if w not in COMMON_STOP_WORDS]
     target_words = content_words if content_words else raw_words
 
@@ -205,49 +220,83 @@ def extract_token_blocking_keys(name: Optional[str], min_len: int = 2) -> List[s
     # Index all content words >= 3 chars
     for w in target_words:
         if len(w) >= 3:
-            keys.append(f"TOK:{w}")
+            keys.append(f"{prefix_tag}TOK:{w}")
 
     # 1. Sorted first two tokens (order-invariant)
     sorted_words = sorted(target_words)
     if len(sorted_words) >= 2:
         w0, w1 = sorted_words[0], sorted_words[1]
-        keys.append(f"TOK2:{w0}_{w1}")
+        keys.append(f"{prefix_tag}TOK2:{w0}_{w1}")
         if len(w0) >= 3 and len(w1) >= 3:
-            keys.append(f"TOK2_PRE3:{w0[:3]}_{w1[:3]}")
-    keys.append(f"TOK1:{sorted_words[0]}")
+            keys.append(f"{prefix_tag}TOK2_PRE3:{w0[:3]}_{w1[:3]}")
+    keys.append(f"{prefix_tag}TOK1:{sorted_words[0]}")
 
     # 2. Acronym of content tokens
     if len(target_words) >= 2:
         acro = "".join(w[0] for w in target_words[:4])
         if len(acro) >= 2:
-            keys.append(f"ACRO:{acro}")
+            keys.append(f"{prefix_tag}ACRO:{acro}")
 
     # 3. Longest distinctive token (if length >= 4)
     longest = max(target_words, key=len)
     if len(longest) >= 5:
-        keys.append(f"LONG:{longest}")
+        keys.append(f"{prefix_tag}LONG:{longest}")
         for i in range(min(3, len(longest) - 3)):
-            keys.append(f"G4:{longest[i:i+4]}")
+            keys.append(f"{prefix_tag}G4:{longest[i:i+4]}")
     if len(longest) >= 4:
         for i in range(min(4, len(longest) - 2)):
-            keys.append(f"G3:{longest[i:i+3]}")
+            keys.append(f"{prefix_tag}G3:{longest[i:i+3]}")
 
     # 4. First 6 characters prefix of full string
     clean_str = "".join(raw_words)
     if len(clean_str) >= 6:
-        keys.append(f"PRE6:{clean_str[:6]}")
+        keys.append(f"{prefix_tag}PRE6:{clean_str[:6]}")
     clean_target = "".join(target_words)
     if len(clean_target) >= 5:
-        keys.append(f"PRE5:{clean_target[:5]}")
+        keys.append(f"{prefix_tag}PRE5:{clean_target[:5]}")
 
     return keys
 
 
-def extract_phonetic_blocking_keys(name: Optional[str], min_len: int = 2) -> List[str]:
-    """Generate phonetic (Metaphone and Soundex) blocking keys via jellyfish."""
+def extract_token_blocking_keys(name: Optional[str], min_len: int = 2) -> List[str]:
+    """
+    Generate exact and fuzzy token-overlap blocking keys with:
+      - Domain stripping
+      - Transliteration-normalization for non-Latin / Indic scripts
+      - Prefix-stripped keys for honorific/legal variance
+    """
     if not name:
         return []
-    raw_str = str(name).lower()
+    raw_str = str(name).strip()
+    if not raw_str:
+        return []
+
+    keys = []
+    # 1. Base keys on original string
+    keys.extend(_generate_token_keys_for_string(raw_str, prefix_tag="", min_len=min_len))
+
+    # 2. Transliteration-normalized keys if non-ascii (Devanagari, Telugu, Gujarati, Gurmukhi, etc.)
+    if not raw_str.isascii():
+        translit_str = unidecode.unidecode(raw_str)
+        if translit_str and translit_str != raw_str:
+            keys.extend(_generate_token_keys_for_string(translit_str, prefix_tag="", min_len=min_len))
+            keys.extend(_generate_token_keys_for_string(translit_str, prefix_tag="XLAT_", min_len=min_len))
+
+    # 3. Prefix-stripped blocking keys (strips Sri, Shree, Shri, Private, Pvt, Ltd, M/s, etc.)
+    stripped = strip_honorific_prefixes(raw_str)
+    if stripped and stripped.lower() != raw_str.lower():
+        keys.extend(_generate_token_keys_for_string(stripped, prefix_tag="PFX_", min_len=min_len))
+
+    if not raw_str.isascii():
+        stripped_translit = strip_honorific_prefixes(unidecode.unidecode(raw_str))
+        if stripped_translit:
+            keys.extend(_generate_token_keys_for_string(stripped_translit, prefix_tag="PFX_", min_len=min_len))
+
+    return list(dict.fromkeys(keys))
+
+
+def _generate_phonetic_keys_for_string(text: str, prefix_tag: str = "", min_len: int = 2) -> List[str]:
+    raw_str = text.lower()
     de_domain = DOMAIN_REGEX.sub(" ", raw_str)
     words = [w for w in PUNCT_SPLIT.split(de_domain) if len(w) >= min_len and w.isalpha()]
     if not words:
@@ -260,21 +309,57 @@ def extract_phonetic_blocking_keys(name: Optional[str], min_len: int = 2) -> Lis
     # 1. Metaphone of first word
     meta0 = jellyfish.metaphone(target_words[0])
     if meta0 and len(meta0) >= min_len:
-        keys.append(f"META1:{meta0}")
+        keys.append(f"{prefix_tag}META1:{meta0}")
 
     # 2. Metaphone of first two words
     if len(target_words) >= 2:
         meta1 = jellyfish.metaphone(target_words[1])
         if meta1 and len(meta1) >= 2:
             sorted_meta = sorted([meta0, meta1])
-            keys.append(f"META2:{sorted_meta[0]}_{sorted_meta[1]}")
+            keys.append(f"{prefix_tag}META2:{sorted_meta[0]}_{sorted_meta[1]}")
 
     # 3. Soundex of first word
     snd0 = jellyfish.soundex(target_words[0])
     if snd0:
-        keys.append(f"SND1:{snd0}")
+        keys.append(f"{prefix_tag}SND1:{snd0}")
 
     return keys
+
+
+def extract_phonetic_blocking_keys(name: Optional[str], min_len: int = 2) -> List[str]:
+    """
+    Generate phonetic (Metaphone and Soundex) blocking keys with:
+      - Transliteration normalization for non-Latin / Indic scripts
+      - Prefix-stripped phonetic keys for honorific/legal variance
+    """
+    if not name:
+        return []
+    raw_str = str(name).strip()
+    if not raw_str:
+        return []
+
+    keys = []
+    # 1. Base phonetic keys
+    keys.extend(_generate_phonetic_keys_for_string(raw_str, prefix_tag="", min_len=min_len))
+
+    # 2. Transliteration phonetic keys (enables phonetic matching for Devanagari, Telugu, Gujarati, Gurmukhi, etc.)
+    if not raw_str.isascii():
+        translit_str = unidecode.unidecode(raw_str)
+        if translit_str:
+            keys.extend(_generate_phonetic_keys_for_string(translit_str, prefix_tag="", min_len=min_len))
+
+    # 3. Prefix-stripped phonetic keys
+    stripped = strip_honorific_prefixes(raw_str)
+    if stripped and stripped.lower() != raw_str.lower():
+        keys.extend(_generate_phonetic_keys_for_string(stripped, prefix_tag="PFX_", min_len=min_len))
+
+    if not raw_str.isascii():
+        stripped_translit = strip_honorific_prefixes(unidecode.unidecode(raw_str))
+        if stripped_translit:
+            keys.extend(_generate_phonetic_keys_for_string(stripped_translit, prefix_tag="PFX_", min_len=min_len))
+
+    return list(dict.fromkeys(keys))
+
 
 
 def extract_address_blocking_keys(
@@ -287,8 +372,17 @@ def extract_address_blocking_keys(
     raw_address: Optional[str] = None,
     country: str = "US",
 ) -> List[str]:
-    """Generate address-based blocking keys combined with name prefix to control block size."""
+    # 0. Transliteration for non-ASCII / Indic address components
+    if raw_address and not str(raw_address).isascii():
+        raw_address = f"{raw_address} {unidecode.unidecode(str(raw_address))}"
+    if city and not str(city).isascii():
+        city = unidecode.unidecode(str(city))
+    if state and not str(state).isascii():
+        state = unidecode.unidecode(str(state))
     clean_name = str(name or "").lower().strip()
+    if clean_name and not clean_name.isascii():
+        clean_name = unidecode.unidecode(clean_name)
+
     prefix = clean_name[:2] if len(clean_name) >= 2 else "xx"
     clean_city = str(city).lower().strip() if city and pd.notna(city) and str(city).lower() not in ("none", "nan", "<null>") else ""
     raw_addr_str = str(raw_address or "").lower()
@@ -492,6 +586,7 @@ class MultiStrategyBlocker:
                     min_df=min_df_val,
                 )
                 text_series = sub_df["norm_name"].fillna("").astype(str)
+                text_series = text_series.apply(lambda s: f"{s} {unidecode.unidecode(s)}" if not s.isascii() else s)
                 X_corpus = vec.fit_transform(text_series)
                 partition_data["tfidf_vec"] = vec
 
@@ -633,6 +728,7 @@ class MultiStrategyBlocker:
             if self.config.enable_tfidf and "tfidf_vec" in part:
                 vec = part["tfidf_vec"]
                 text_series = sub_query["norm_name"].fillna("").astype(str)
+                text_series = text_series.apply(lambda s: f"{s} {unidecode.unidecode(s)}" if not s.isascii() else s)
 
                 # Process in batches to limit peak memory
                 for i in range(0, len(sub_query), batch_size):

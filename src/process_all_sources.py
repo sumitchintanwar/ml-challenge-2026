@@ -44,6 +44,7 @@ PARQUET_SCHEMA = pa.schema([
     ("norm_name", pa.string()),
     ("norm_name_no_legal", pa.string()),
     ("legal_type", pa.string()),
+    ("credential", pa.string()),
     ("norm_address", pa.string()),
     ("addr_street_number", pa.string()),
     ("addr_street_name", pa.string()),
@@ -64,6 +65,7 @@ def _worker_normalize_batch(
     norm_names = []
     norm_names_no_legal = []
     legal_types = []
+    credentials = []
 
     norm_addrs = []
     street_nums = []
@@ -79,6 +81,7 @@ def _worker_normalize_batch(
         norm_names.append(n_res.norm_name)
         norm_names_no_legal.append(n_res.norm_name_no_legal)
         legal_types.append(n_res.legal_type)
+        credentials.append(n_res.credential)
 
         a_res = normalize_address(addr, country=country)
         norm_addrs.append(a_res.cleaned_address)
@@ -98,6 +101,7 @@ def _worker_normalize_batch(
         "norm_name": norm_names,
         "norm_name_no_legal": norm_names_no_legal,
         "legal_type": legal_types,
+        "credential": credentials,
         "norm_address": norm_addrs,
         "addr_street_number": street_nums,
         "addr_street_name": street_names,
@@ -186,6 +190,7 @@ def process_single_source(
                         "norm_name": chunk_dict["norm_name"][local_idx],
                         "norm_name_no_legal": chunk_dict["norm_name_no_legal"][local_idx],
                         "legal_type": chunk_dict["legal_type"][local_idx],
+                        "credential": chunk_dict["credential"][local_idx],
                         "orig_address": chunk_dict["business_address"][local_idx],
                         "norm_address": chunk_dict["norm_address"][local_idx],
                         "addr_street_number": chunk_dict["addr_street_number"][local_idx],

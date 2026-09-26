@@ -60,6 +60,15 @@ def get_or_create_entity_split(
     unique_entities = sorted(list(set(s1_entities)))
     print(f"Total unique Source 1 entities to split: {len(unique_entities):,}")
 
+    out_file = Path(split_output_path)
+    if out_file.exists():
+        print(f"Loading existing entity split from {split_output_path}...")
+        with open(out_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        print(f"  Train entities: {len(data['train_entity_ids']):,} ({data['metadata']['train_pct']}%)")
+        print(f"  Val entities:   {len(data['val_entity_ids']):,} ({data['metadata']['val_pct']}%)")
+        return data["train_entity_ids"], data["val_entity_ids"], data["metadata"]
+
     # Load country mapping
     print(f"Loading country metadata from {s1_parquet_path}...")
     s1_df = pd.read_parquet(s1_parquet_path, columns=["entity_id", "country"])

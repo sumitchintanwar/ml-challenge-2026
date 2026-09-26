@@ -1,0 +1,175 @@
+{
+  "total_val_true_pairs": 34792,
+  "old_captured": 29660,
+  "old_recall_ceiling_pct": 85.25,
+  "new_captured": 34627,
+  "new_recall_ceiling_pct": 99.53,
+  "recovered_count": 4967,
+  "recovered_pct": 96.78,
+  "country_breakdown": {
+    "US": {
+      "total": 2281,
+      "recovered": 2218
+    },
+    "India": {
+      "total": 2851,
+      "recovered": 2749
+    }
+  },
+  "sample_recovered": [
+    {
+      "s1_id": "S1-444786954",
+      "cand_id": "S2-85725895",
+      "s1_name": "Good Hospitality Private Limited",
+      "s1_address": "D-14, 1St Floor Preet Vihar, Delhi, East Delhi, Delhi",
+      "cand_name": "\u0917\u0941\u0921 \u0939\u0949\u0938\u094d\u092a\u093f\u091f\u0948\u0932\u093f\u091f\u0940 \u092a\u094d\u0930\u093e\u0907\u0935\u0947\u091f \u0932\u093f\u092e\u093f\u091f\u0947\u0921",
+      "cand_address": "NULL, DELHI, D-14, Delhi, EAST DELHI",
+      "country": "India",
+      "matching_keys": [
+        "META1:KT",
+        "SND1:G300",
+        "ADDR_PLOT_STATE:DELHI_14",
+        "NUM_ST:DELHI_14"
+      ]
+    },
+    {
+      "s1_id": "S1-255423553",
+      "cand_id": "S2-393201294",
+      "s1_name": "Best Foundation Private Limited",
+      "s1_address": "B-50, Midc, Phase-I, Khambalpada, Dombivli East, Dombivli, Maharashtra",
+      "cand_name": "\u092c\u0947\u0938\u094d\u091f \u092b\u093e\u0909\u0902\u0921\u0947\u0936\u0928 \u092a\u094d\u0930\u093e\u0907\u0935\u0947\u091f \u0932\u093f\u092e\u093f\u091f\u0947\u0921",
+      "cand_address": "B-50, MIDC, PHASE-I, KHAMBALPADA, DOMBIVLI, DOMBIVLI EAST, Maharashtra",
+      "country": "India",
+      "matching_keys": [
+        "NUM_ST:MAHARASHTRA_50",
+        "ADDR_WORD_STATE:MAHARASHTRA_khambalpada",
+        "ADDR_WORD_STATE:MAHARASHTRA_dombivli",
+        "ADDR_PLOT_STATE:MAHARASHTRA_50",
+        "META1:BST"
+      ]
+    },
+    {
+      "s1_id": "S1-608689972",
+      "cand_id": "S3-910714702",
+      "s1_name": "Interstate Supply Products LLC",
+      "s1_address": "59 Mahoney Lane, Unit 1, Northbridge, MA",
+      "cand_name": "Interstate  Supply",
+      "cand_address": "59 Mahoney Lane, # 1, Northbride, Massachusetts",
+      "country": "US",
+      "matching_keys": [
+        "G4:ters",
+        "G3:ter",
+        "TOK:interstate",
+        "META2:INTRSTT_SPL",
+        "META1:INTRSTT"
+      ]
+    },
+    {
+      "s1_id": "S1-177859717",
+      "cand_id": "S3-738805028",
+      "s1_name": "Technologies Banshidhar Developers Private Limited",
+      "s1_address": "Wz-686/C 1(B-15), T/F, Flat No-302, Kh No 64/5 Raj Nagar Palam Colony, New Delhi, South West Delhi, Delhi",
+      "cand_name": "Technologies Banshidhar Developers Private Ltd",
+      "cand_address": "",
+      "country": "India",
+      "matching_keys": [
+        "PRE5:techn",
+        "TOK2:banshidhar_developers",
+        "TOK2_PRE3:ban_dev",
+        "G3:hno",
+        "PRE6:techno"
+      ]
+    },
+    {
+      "s1_id": "S1-171651451",
+      "cand_id": "S3-472668417",
+      "s1_name": "Global Suppliers Private Limited",
+      "s1_address": "23, 3Rd Floor, Patel Avenue, Thaltej, Ahmadabad City, Ahmedabad, Gujarat",
+      "cand_name": "Global Suppliers Limited Service",
+      "cand_address": "GJ, Ahmedabad, Ahmadabad City, Plot 248 23",
+      "country": "India",
+      "matching_keys": [
+        "ADDR_PLOT_STATE:GUJARAT_23",
+        "G3:pli",
+        "PRE5:globa",
+        "LONG:suppliers",
+        "G3:upp"
+      ]
+    },
+    {
+      "s1_id": "S1-833168940",
+      "cand_id": "S3-364901981",
+      "s1_name": "Shiva International Private Limited",
+      "s1_address": "Mumbai City, G94, Mumbai, Maharashtra, Express Zone Mall, B Wing, Next To Patel Vanika, W.E Highway, Goregaon East",
+      "cand_name": "\u0936\u093f\u0935\u093e \u0907\u0902\u091f\u0930\u0928\u0947\u0936\u0928\u0932 \u092a\u094d\u0930\u093e\u0907\u0935\u0947\u091f \u0932\u093f\u092e\u093f\u091f\u0947\u0921",
+      "cand_address": "Block A-14. G94, Mumbai City, Mumbai, \u092e\u0939\u093e\u0930\u093e\u0937\u094d\u091f\u094d\u0930",
+      "country": "India",
+      "matching_keys": [
+        "ADDR_PLOT_STATE:MAHARASHTRA_94"
+      ]
+    },
+    {
+      "s1_id": "S1-739526767",
+      "cand_id": "S2-957783551",
+      "s1_name": "Modern Investments",
+      "s1_address": "402, Jeet Complex, Off C.G Road, Ahmadabad City, Ahmedabad, Gujarat",
+      "cand_name": "Modern Investments LLP",
+      "cand_address": "D/402, JEET COMPLEX, OFF C.G ROAD, AHMADABAD CITY, Gujarat",
+      "country": "India",
+      "matching_keys": [
+        "TOK:investments",
+        "G4:nves",
+        "NUM_ST:GUJARAT_402",
+        "LONG:investments",
+        "G4:inve"
+      ]
+    },
+    {
+      "s1_id": "S1-379468226",
+      "cand_id": "S2-962088230",
+      "s1_name": "Dynamic Constructions Limited",
+      "s1_address": "Shop No. 1 And 2, Parasram Nagar, Dher Ka Balaji, Sikar Road, Jaipur, Rajasthan",
+      "cand_name": "\u0921\u093e\u092f\u0928\u093e\u092e\u093f\u0915 \u0915\u0902\u0938\u094d\u091f\u094d\u0930\u0915\u094d\u0936\u0902\u0938 \u0932\u093f\u092e\u093f\u091f\u0947\u0921",
+      "cand_address": "SOHP NO. 1/9 AND 2, JAIPUR, Rajasthan",
+      "country": "India",
+      "matching_keys": [
+        "ADDR_WORD_STATE:RAJASTHAN_rajasthan",
+        "ADDR_PLOT_CITY:jaipur_2",
+        "ADDR_PLOT_CITY:jaipur_1",
+        "ADDR_WORD_CITY:jaipur_rajasthan"
+      ]
+    },
+    {
+      "s1_id": "S1-312234400",
+      "cand_id": "S2-647432978",
+      "s1_name": "Hotel Management Pvt Ltd",
+      "s1_address": "E-228 Greater Kailash Part-I, New Delhi, South Delhi, Delhi",
+      "cand_name": "\u0939\u094b\u091f\u0932 \u092e\u0948\u0928\u0947\u091c\u092e\u0947\u0902\u091f \u092a\u094d\u0930\u093e. \u0932\u093f.",
+      "cand_address": "SOUTH DELHI, E-228 GREATER KAILASH PART-I, Delhi, NEW DELHI",
+      "country": "India",
+      "matching_keys": [
+        "ADDR_WORD_STATE:DELHI_greater",
+        "ADDR_PAIR_STATE:DELHI_greater_kailash",
+        "ADDR_PLOT_STATE:DELHI_228",
+        "NUM_ST:DELHI_228",
+        "ADDR_WORD_STATE:DELHI_kailash"
+      ]
+    },
+    {
+      "s1_id": "S1-970857478",
+      "cand_id": "S3-254935942",
+      "s1_name": "Piedmont Endocrinology",
+      "s1_address": "1043 Tyler Drive, Fayetteville, NC",
+      "cand_name": "Piedmont Center",
+      "cand_address": "North Carolina, Faetteville, 1043 Tyler Drive",
+      "country": "US",
+      "matching_keys": [
+        "SND1:P355",
+        "META1:PTMNT",
+        "NUM_ST:NORTH CAROLINA_1043",
+        "TOK:piedmont",
+        "PRE5:piedm"
+      ]
+    }
+  ]
+}
