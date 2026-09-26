@@ -1,0 +1,598 @@
+[
+  {
+    "case_num": 1,
+    "country": "US",
+    "s1_id": "S1-682035238",
+    "target_id": "S3-897743546",
+    "s1_name": "20/20 Eye Care Corp",
+    "tgt_name": "Corp 20/20 Eye Care",
+    "s1_norm_name": "20 20 eye care corporation",
+    "tgt_norm_name": "20 20 eye care corporation",
+    "s1_address": "36 Lambert Street, Hatfield Borough, PA",
+    "tgt_address": "Pennsylvania, Hatfield, 36 Lambert Street",
+    "s1_city_state": "Hatfield Borough, PA (zip: None)",
+    "tgt_city_state": "Hatfield, PA (zip: None)",
+    "token_shared": [
+      "TOK2:care_eye",
+      "TOK1:care",
+      "PRE5:eyeca",
+      "PRE6:eyecar"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "SND1:E000",
+      "META2:EY_KR"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:PA_36"
+    ],
+    "addr_in_index": [
+      "NUM_ST:PA_36"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 2,
+    "country": "US",
+    "s1_id": "S1-6278689",
+    "target_id": "S2-325184032",
+    "s1_name": "Straight Edge Cleaning Service!",
+    "tgt_name": "Straight Edge Cleaning Service! Corporation",
+    "s1_norm_name": "straight edge cleaning service",
+    "tgt_norm_name": "straight edge cleaning service corporation",
+    "s1_address": "Lackawanna, 33 Brown Street, NY",
+    "tgt_address": "33-D BROWN STREET, <NULL>, BUFFALO, NY",
+    "s1_city_state": "Lackawanna, NY (zip: None)",
+    "tgt_city_state": "<NULL>, NY (zip: None)",
+    "token_shared": [
+      "LONG:straight",
+      "G4:stra",
+      "PRE5:strai",
+      "G4:raig",
+      "TOK1:cleaning",
+      "PRE6:straig",
+      "TOK2:cleaning_edge",
+      "G4:trai"
+    ],
+    "token_in_index": [
+      "TOK2:cleaning_edge"
+    ],
+    "phone_shared": [
+      "META1:STRT",
+      "META2:EJ_STRT",
+      "SND1:S362"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:NY_33"
+    ],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 3,
+    "country": "US",
+    "s1_id": "S1-245816222",
+    "target_id": "S2-958313877",
+    "s1_name": "Heritage Patriot Oak L.L.C.",
+    "tgt_name": "@h\u00e9ritagepatriot",
+    "s1_norm_name": "heritage patriot oak llc",
+    "tgt_norm_name": "at heritagepatriot",
+    "s1_address": "1653 1050, Jamestown, IN",
+    "tgt_address": "1653 1050, JAMESTOWN, IN",
+    "s1_city_state": "Jamestown, IN (zip: None)",
+    "tgt_city_state": "JAMESTOWN, IN (zip: None)",
+    "token_shared": [
+      "G4:erit",
+      "PRE6:herita",
+      "PRE5:herit",
+      "G4:rita",
+      "G4:heri"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "SND1:H632"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:IN_1653"
+    ],
+    "addr_in_index": [
+      "NUM_ST:IN_1653"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 4,
+    "country": "US",
+    "s1_id": "S1-360721133",
+    "target_id": "S3-168510405",
+    "s1_name": "Atlantic Commercial Labs LLC",
+    "tgt_name": "Atlantic L\u00e1bs LLC Center",
+    "s1_norm_name": "atlantic commercial labs llc",
+    "tgt_norm_name": "atlantic labs center llc",
+    "s1_address": "312 Turquoise Drive, Fort Worth, TX",
+    "tgt_address": "Texas, 1 Turquoise Dr, Fort Worth",
+    "s1_city_state": "Fort Worth, TX (zip: None)",
+    "tgt_city_state": "Fort Worth, TX (zip: None)",
+    "token_shared": [
+      "TOK1:atlantic",
+      "PRE6:atlant",
+      "PRE5:atlan"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "META1:ATLNTK",
+      "SND1:A345"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "GEO:TX_fort worth_at"
+    ],
+    "addr_in_index": [
+      "GEO:TX_fort worth_at"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 5,
+    "country": "US",
+    "s1_id": "S1-643228755",
+    "target_id": "S2-198973928",
+    "s1_name": "Durham Sound P.C.",
+    "tgt_name": "JAXHALOXYLO",
+    "s1_norm_name": "durham sound pc",
+    "tgt_norm_name": "jaxhaloxylo",
+    "s1_address": "102 Tuftin Drive, Durham, NC",
+    "tgt_address": "NC, 102 TUFTIN DR, DURHAM",
+    "s1_city_state": "Durham, NC (zip: None)",
+    "tgt_city_state": "DURHAM, NC (zip: None)",
+    "token_shared": [],
+    "token_in_index": [],
+    "phone_shared": [],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:NC_102"
+    ],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 6,
+    "country": "US",
+    "s1_id": "S1-991055187",
+    "target_id": "S3-186608179",
+    "s1_name": "Clean Choice Karman LLC",
+    "tgt_name": "... cleanchoicekarman.com",
+    "s1_norm_name": "clean choice karman llc",
+    "tgt_norm_name": "cleanchoicekarman com",
+    "s1_address": "1151 Falls Road, Unit 215, Rocky Mount, NC",
+    "tgt_address": "1151 Falls Rd, # 215, North Carolina, Rocky Mount",
+    "s1_city_state": "Rocky Mount, NC (zip: None)",
+    "tgt_city_state": "# 215, NC (zip: None)",
+    "token_shared": [
+      "PRE5:clean",
+      "PRE6:cleanc"
+    ],
+    "token_in_index": [],
+    "phone_shared": [],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:NC_1151"
+    ],
+    "addr_in_index": [
+      "NUM_ST:NC_1151"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 7,
+    "country": "US",
+    "s1_id": "S1-382230216",
+    "target_id": "S2-41605994",
+    "s1_name": "Metro Network",
+    "tgt_name": "Metro Center",
+    "s1_norm_name": "metro network",
+    "tgt_norm_name": "metro center",
+    "s1_address": "2526 Farmstead Drive, Rockville, MD",
+    "tgt_address": "2526 FARMSTEAD DRIVE, ROCKVILLE, MD",
+    "s1_city_state": "Rockville, MD (zip: None)",
+    "tgt_city_state": "ROCKVILLE, MD (zip: None)",
+    "token_shared": [
+      "PRE5:metro"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "META1:MTR",
+      "SND1:M360"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:MD_2526",
+      "GEO:MD_rockville_me"
+    ],
+    "addr_in_index": [
+      "NUM_ST:MD_2526",
+      "GEO:MD_rockville_me"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 8,
+    "country": "US",
+    "s1_id": "S1-290380626",
+    "target_id": "S3-546609127",
+    "s1_name": "Pacific Network Inc",
+    "tgt_name": "Inc Pacific Nwtork",
+    "s1_norm_name": "pacific network inc",
+    "tgt_norm_name": "pacific nwtork inc",
+    "s1_address": "18275 Cr 463, Brazoria, TX",
+    "tgt_address": "18275 1/2 Cr 463, Brazoria, Texas",
+    "s1_city_state": "Cr 463, TX (zip: 18275)",
+    "tgt_city_state": "1/2 Cr 463, TX (zip: 18275)",
+    "token_shared": [
+      "LONG:pacific",
+      "G4:cifi",
+      "PRE6:pacifi",
+      "PRE5:pacif",
+      "G4:paci",
+      "G4:acif"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "SND1:P212",
+      "META1:PSFK"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "POST:18275_pa"
+    ],
+    "addr_in_index": [
+      "POST:18275_pa"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 9,
+    "country": "US",
+    "s1_id": "S1-466699327",
+    "target_id": "S3-734600751",
+    "s1_name": "Ganet LLC",
+    "tgt_name": "Ganet LLC Trading",
+    "s1_norm_name": "ganet llc",
+    "tgt_norm_name": "ganet trading llc",
+    "s1_address": "403 Michigan Avenue, Edgerton, OH",
+    "tgt_address": "",
+    "s1_city_state": "Edgerton, OH (zip: None)",
+    "tgt_city_state": "None, None (zip: None)",
+    "token_shared": [
+      "PRE5:ganet",
+      "TOK1:ganet"
+    ],
+    "token_in_index": [
+      "PRE5:ganet",
+      "TOK1:ganet"
+    ],
+    "phone_shared": [
+      "SND1:G530",
+      "META1:KNT"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 10,
+    "country": "US",
+    "s1_id": "S1-499424336",
+    "target_id": "S3-907042200",
+    "s1_name": "Klaus Agnc Inc",
+    "tgt_name": "Orbivio fka Klaus Agnc Inc",
+    "s1_norm_name": "klaus agnc inc",
+    "tgt_norm_name": "orbivio fka klaus agnc inc",
+    "s1_address": "110 Michigan Avenue, Unit 31F, Washington, DC",
+    "tgt_address": "110 Michigan Avenue, Unit 31F, Washington, DC",
+    "s1_city_state": "DC, WA (zip: None)",
+    "tgt_city_state": "DC, WA (zip: None)",
+    "token_shared": [
+      "TOK1:agnc"
+    ],
+    "token_in_index": [],
+    "phone_shared": [],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:WA_110"
+    ],
+    "addr_in_index": [
+      "NUM_ST:WA_110"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 11,
+    "country": "India",
+    "s1_id": "S1-13628704",
+    "target_id": "S2-922761662",
+    "s1_name": "Hotel Properties Private Limited",
+    "tgt_name": "\u0d39\u0d4b\u0d1f\u0d4d\u0d1f\u0d7d \u0d2a\u0d4d\u0d30\u0d4b\u0d2a\u0d4d\u0d2a\u0d7c\u0d1f\u0d4d\u0d1f\u0d40\u0d38\u0d4d \u0d2a\u0d4d\u0d30\u0d48\u0d35\u0d31\u0d4d\u0d31\u0d4d \u0d32\u0d3f\u0d2e\u0d3f\u0d31\u0d4d\u0d31\u0d21\u0d4d",
+    "s1_norm_name": "hotel properties private limited",
+    "tgt_norm_name": "\u0d39 \u0d1f\u0d1f\u0d7d \u0d2a\u0d30 \u0d2a\u0d2a\u0d7c\u0d1f\u0d1f \u0d38 \u0d2a\u0d30 \u0d35\u0d31\u0d31 \u0d32 \u0d2e \u0d31\u0d31\u0d21",
+    "s1_address": "Door No.70/21 To 85/21, Pulparamba, Chennamangallur P.O., Mukkam, Kozhikode, Kerala",
+    "tgt_address": "#70/21 TO 85/21, KOZHIKODE, Kerala",
+    "s1_city_state": "Kozhikode, Kerala (zip: None)",
+    "tgt_city_state": "KOZHIKODE, Kerala (zip: None)",
+    "token_shared": [],
+    "token_in_index": [],
+    "phone_shared": [],
+    "phone_in_index": [],
+    "addr_shared": [],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 12,
+    "country": "India",
+    "s1_id": "S1-254490374",
+    "target_id": "S3-508515353",
+    "s1_name": "CA Marketing Private Limited",
+    "tgt_name": "Private CA Marketing Private",
+    "s1_norm_name": "ca marketing private limited",
+    "tgt_norm_name": "ca marketing private private limited",
+    "s1_address": "H.No.5-35/162/535, Flat No.35, Tirumalagiri, Hyderabad, Telangana",
+    "tgt_address": "TG, Flat No.35, Hyderabad, Tirumalagiri, 535162284",
+    "s1_city_state": "Hyderabad, Telangana (zip: None)",
+    "tgt_city_state": "535162284, Telangana (zip: None)",
+    "token_shared": [
+      "G4:mark",
+      "G4:rket",
+      "TOK1:marketing",
+      "LONG:marketing",
+      "PRE6:market",
+      "G4:arke",
+      "PRE5:marke"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "META1:MRKTNK",
+      "SND1:M623"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 13,
+    "country": "India",
+    "s1_id": "S1-887486075",
+    "target_id": "S3-808352511",
+    "s1_name": "Innovative Infrastructure Private Limited",
+    "tgt_name": "\u0907\u0928\u094b\u0935\u0947\u091f\u093f\u0935 \u0907\u0902\u092b\u094d\u0930\u093e\u0938\u094d\u091f\u094d\u0930\u0915\u094d\u091a\u0930 \u092a\u094d\u0930\u093e\u0907\u0935\u0947\u091f \u0932\u093f\u092e\u093f\u091f\u0947\u0921",
+    "s1_norm_name": "innovative infrastructure private limited",
+    "tgt_norm_name": "\u0907\u0928 \u0935\u091f \u0935 \u0907\u092b\u0930 \u0938\u091f\u0930\u0915\u091a\u0930 \u092a\u0930 \u0907\u0935\u091f \u0932 \u092e \u091f\u0921",
+    "s1_address": "Uttar Pradesh, D-9, Gautam Buddha Nagar, Noida, Ground Floor, Sector-3, Gautam Buddha Nagar",
+    "tgt_address": "D-9, Ground Floor, Sector-3, Gautam Buddha Nagar, Noida, Gautam Buddha Nagar, UP",
+    "s1_city_state": "Gautam Buddha Nagar, Uttar Pradesh (zip: None)",
+    "tgt_city_state": "Gautam Buddha Nagar, Uttar Pradesh (zip: None)",
+    "token_shared": [],
+    "token_in_index": [],
+    "phone_shared": [],
+    "phone_in_index": [],
+    "addr_shared": [],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 14,
+    "country": "India",
+    "s1_id": "S1-8544509",
+    "target_id": "S3-782825329",
+    "s1_name": "Kvr Polytechnic",
+    "tgt_name": "pkvr.com",
+    "s1_norm_name": "kvr polytechnic",
+    "tgt_norm_name": "pkvr com",
+    "s1_address": "1288, M.K.P. Palayamkotti, Palayankottai, Tirunelveli, Tamil Nadu",
+    "tgt_address": "1288, Tirunelveli, Palayankottai, TN",
+    "s1_city_state": "Tirunelveli, Tamil Nadu (zip: None)",
+    "tgt_city_state": "Palayankottai, Tamil Nadu (zip: None)",
+    "token_shared": [],
+    "token_in_index": [],
+    "phone_shared": [],
+    "phone_in_index": [],
+    "addr_shared": [
+      "NUM_ST:TAMIL NADU_1288"
+    ],
+    "addr_in_index": [
+      "NUM_ST:TAMIL NADU_1288"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 15,
+    "country": "India",
+    "s1_id": "S1-284675582",
+    "target_id": "S2-892632945",
+    "s1_name": "Hari & Co Limited",
+    "tgt_name": "Mr @hari",
+    "s1_norm_name": "hari and company limited",
+    "tgt_norm_name": "mr at hari",
+    "s1_address": "House No 283 Ground Floor Blk-B Lok Vihar, Pitampura, Delhi, North West, Delhi",
+    "tgt_address": "<NULL>, HOUSE NO B3/283 GROUND FLOOR BLK-B LOK VIHAR, PITAMPURA, DELHI, Delhi",
+    "s1_city_state": "Delhi, Delhi (zip: None)",
+    "tgt_city_state": "Delhi, Delhi (zip: None)",
+    "token_shared": [
+      "TOK1:hari"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "SND1:H600"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 16,
+    "country": "India",
+    "s1_id": "S1-180566991",
+    "target_id": "S2-849156028",
+    "s1_name": "Hotel Projects Private Limited",
+    "tgt_name": "Hotel Projects Private",
+    "s1_norm_name": "hotel projects private limited",
+    "tgt_norm_name": "hotel projects private",
+    "s1_address": "Katara Mantion 1St Floorflat No 3 132 Dr Annie Basant Road Worli Naka, Mumbai, Maharashtra",
+    "tgt_address": "KATARA MANTION 1ST FLOORFLAT NO 3 132 DR ANNIE BASANT ROAD WORLI NAKA, MUMBAI, Maharashtra",
+    "s1_city_state": "Mumbai, Maharashtra (zip: None)",
+    "tgt_city_state": "MUMBAI, Maharashtra (zip: None)",
+    "token_shared": [
+      "LONG:projects",
+      "PRE6:hotelp",
+      "PRE5:hotel",
+      "G4:ojec",
+      "G4:proj",
+      "G4:roje",
+      "TOK1:hotel"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "META1:HTL",
+      "META2:HTL_PRJKTS",
+      "SND1:H340"
+    ],
+    "phone_in_index": [
+      "META2:HTL_PRJKTS"
+    ],
+    "addr_shared": [
+      "GEO:MAHARASHTRA_mumbai_ho"
+    ],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 17,
+    "country": "India",
+    "s1_id": "S1-564225846",
+    "target_id": "S3-116671839",
+    "s1_name": "Alpha Vision Infotech Private Limited",
+    "tgt_name": "Alpha",
+    "s1_norm_name": "alpha vision infotech private limited",
+    "tgt_norm_name": "alpha",
+    "s1_address": "B-5/68, Sudarshna Nagar, ., Bikaner, Rajasthan",
+    "tgt_address": "B-5/68, Sudarshna Nagar, ., Bikaner, Rajasthan",
+    "s1_city_state": "Bikaner, Rajasthan (zip: None)",
+    "tgt_city_state": "Bikaner, Rajasthan (zip: None)",
+    "token_shared": [
+      "PRE5:alpha",
+      "TOK1:alpha"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "SND1:A410",
+      "META1:ALF"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "GEO:RAJASTHAN_bikaner_al"
+    ],
+    "addr_in_index": [
+      "GEO:RAJASTHAN_bikaner_al"
+    ],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 18,
+    "country": "India",
+    "s1_id": "S1-565620443",
+    "target_id": "S3-159113458",
+    "s1_name": "Pioneer (India) Digital Private Limited",
+    "tgt_name": "pioneerindia.com",
+    "s1_norm_name": "pioneer india digital private limited",
+    "tgt_norm_name": "pioneerindia com",
+    "s1_address": "Flat No 309, Shreshtabhumi, No 87, Kr Road, Shankarpuram, Bangalore South, Bangalore, Karnataka",
+    "tgt_address": "309, Shreshtabhumi, No 87, Kr Road, Shankarpuram, Bangalore, Bangalore South, KA",
+    "s1_city_state": "Bangalore, Karnataka (zip: None)",
+    "tgt_city_state": "Bangalore South, Karnataka (zip: None)",
+    "token_shared": [
+      "PRE6:pionee",
+      "G4:onee",
+      "PRE5:pione",
+      "G4:ione",
+      "G4:pion"
+    ],
+    "token_in_index": [],
+    "phone_shared": [],
+    "phone_in_index": [],
+    "addr_shared": [],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 19,
+    "country": "India",
+    "s1_id": "S1-304628800",
+    "target_id": "S3-762604253",
+    "s1_name": "Hayathnagar Tourisms Private Limited",
+    "tgt_name": "Limited Hayathnagar Private Center",
+    "s1_norm_name": "hayathnagar tourisms private limited",
+    "tgt_norm_name": "hayathnagar private center limited",
+    "s1_address": "6-3-2271/765/102, Sachivalaya Nagar, Hayathnagar, K.V.Rangareddy, Telangana",
+    "tgt_address": "TG, Hayathnagar, 6-3-2271/765/102, Sachivalaya Nagar, Medchal Malkajgiri",
+    "s1_city_state": "K.V.Rangareddy, Telangana (zip: None)",
+    "tgt_city_state": "Medchal Malkajgiri, Telangana (zip: None)",
+    "token_shared": [
+      "PRE6:hayath",
+      "G4:ayat",
+      "PRE5:hayat",
+      "G4:haya",
+      "LONG:hayathnagar",
+      "G4:yath"
+    ],
+    "token_in_index": [
+      "PRE6:hayath",
+      "G4:yath",
+      "LONG:hayathnagar",
+      "PRE5:hayat"
+    ],
+    "phone_shared": [
+      "META1:HY0NKR",
+      "SND1:H352"
+    ],
+    "phone_in_index": [
+      "META1:HY0NKR",
+      "SND1:H352"
+    ],
+    "addr_shared": [],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  },
+  {
+    "case_num": 20,
+    "country": "India",
+    "s1_id": "S1-503105089",
+    "target_id": "S3-305716279",
+    "s1_name": "Pune Laxmi Private Limited",
+    "tgt_name": "Pune Private Laxmi Limited",
+    "s1_norm_name": "pune laxmi private limited",
+    "tgt_norm_name": "pune private laxmi limited",
+    "s1_address": "Flat No. 1, Anjali Heights, Co-Op Hsg Soc. S No 93B/1/5, Shivaji Nagar, Pu, Ne, Pune, Maharashtra",
+    "tgt_address": "Flat No. 1, Pune, MH",
+    "s1_city_state": "Pune, Maharashtra (zip: None)",
+    "tgt_city_state": "Pune, Maharashtra (zip: None)",
+    "token_shared": [
+      "TOK1:laxmi"
+    ],
+    "token_in_index": [],
+    "phone_shared": [
+      "SND1:P500"
+    ],
+    "phone_in_index": [],
+    "addr_shared": [
+      "GEO:MAHARASHTRA_pune_pu"
+    ],
+    "addr_in_index": [],
+    "num_candidates_generated": 60
+  }
+]

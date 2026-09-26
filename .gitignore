@@ -1,0 +1,63 @@
+# ==============================================================================
+# Git Ignore for Amazon ML Challenge 2026 Entity Resolution
+# ==============================================================================
+
+# Python / Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data & Datasets (Strictly excluded)
+data/
+dataset
+dataset/
+*.tsv
+*.csv
+*.parquet
+*.zip
+*.tar.gz
+*.jsonl
+
+# Temporary scripts & Scratch
+scratch/
+.system_generated/
+*.log
+
+# Models & Binary Embeddings / Blocker Indices
+models/*.pkl
+*.pkl
+*.bin
+
+# Output & Submissions (Keep folder structure via .gitkeep)
+output/*.tsv
+output/*.csv
+
+# IDE / Editor configuration
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Antigravity CLI / AI cache
+.gemini/
