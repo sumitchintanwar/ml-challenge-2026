@@ -47,9 +47,10 @@ models/*.pkl
 *.pkl
 *.bin
 
-# Output & Submissions (Keep folder structure via .gitkeep)
-output/*.tsv
+# Output & Submissions (Track final submission TSVs)
 output/*.csv
+!output/matching_results.tsv
+!output/candidate_pairs.tsv
 
 # IDE / Editor configuration
 .idea/
